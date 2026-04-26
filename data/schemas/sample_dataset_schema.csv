@@ -1,0 +1,27 @@
+column_name,dtype,example,description
+province,category,Bagmati,Nepal province name
+district,category,Chitwan,District for region-specific behavior
+gps_lat,float,27.529,Optional latitude
+gps_lon,float,84.354,Optional longitude
+soil_ph,float,6.5,Soil pH
+soil_texture,category,loam,Soil texture class
+soil_fertility_index,float,0.68,Normalized fertility score
+season,category,monsoon,Current farming season
+weather_temp_avg_30d,float,27.3,Average temperature in last 30 days (C)
+weather_rainfall_30d_mm,float,312.0,Rainfall in last 30 days (mm)
+weather_humidity_avg_30d,float,82.1,Average humidity in last 30 days (%)
+weather_temp_avg_90d,float,24.9,Average temperature in last 90 days (C)
+weather_rainfall_90d_mm,float,690.4,Rainfall in last 90 days (mm)
+weather_humidity_avg_90d,float,78.4,Average humidity in last 90 days (%)
+current_crop,category,rice,Current crop under cultivation
+farm_size_ha,float,1.2,Farm size in hectares
+water_availability_index,float,0.73,Normalized water availability
+symptom_text,text,leaf-yellowing and stunted growth,Farmer-entered symptoms
+symptom_pest_indicator,int,1,Structured symptom feature
+symptom_disease_indicator,int,0,Structured symptom feature
+recommended_crop,category,rice,Supervised label for crop recommendation
+risk_pest,category,medium,Target risk label
+risk_disease,category,low,Target risk label
+risk_water_stress,category,high,Target risk label
+risk_soil_mismatch,category,low,Target risk label
+yield_ton_per_ha,float,3.1,Observed yield target

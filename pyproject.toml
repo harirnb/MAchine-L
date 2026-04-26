@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nepal-agri-ml"
+version = "0.1.0"
+description = "Modular multi-model ML system for crop recommendation, risk detection, and yield prediction in Nepal"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.25",
+  "pandas>=2.1",
+  "scikit-learn>=1.4",
+  "xgboost>=2.0",
+  "lightgbm>=4.3",
+  "shap>=0.45",
+  "joblib>=1.3",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
