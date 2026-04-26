@@ -1,0 +1,37 @@
+{
+  "input_schema": {
+    "province": "string",
+    "district": "string",
+    "gps_lat": "float|null",
+    "gps_lon": "float|null",
+    "soil_ph": "float",
+    "soil_texture": "string",
+    "soil_fertility_index": "float(0-1)",
+    "season": "monsoon|winter|spring",
+    "weather_temp_avg_30d": "float",
+    "weather_rainfall_30d_mm": "float",
+    "weather_humidity_avg_30d": "float",
+    "weather_temp_avg_90d": "float",
+    "weather_rainfall_90d_mm": "float",
+    "weather_humidity_avg_90d": "float",
+    "current_crop": "string",
+    "farm_size_ha": "float",
+    "water_availability_index": "float(0-1)",
+    "symptom_text": "string",
+    "symptom_pest_indicator": "0|1",
+    "symptom_disease_indicator": "0|1"
+  },
+  "output_schema": {
+    "recommended_crops": [{"name": "string", "confidence": "float(0-1)"}],
+    "risks": {
+      "pest": "low|medium|high",
+      "disease": "low|medium|high",
+      "water_stress": "low|medium|high",
+      "soil_mismatch": "low|medium|high"
+    },
+    "yield_prediction": "string range tons/hectare",
+    "explanation": "string",
+    "next_steps": ["string"],
+    "confidence_score": "float(0-1)"
+  }
+}
