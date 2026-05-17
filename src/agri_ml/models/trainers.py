@@ -6,6 +6,7 @@ from typing import Dict
 import numpy as np
 import pandas as pd
 from lightgbm import LGBMClassifier, LGBMRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.pipeline import Pipeline
@@ -20,6 +21,8 @@ class TrainedModels:
     crop_model: Pipeline
     risk_model: Pipeline
     yield_model: Pipeline
+    yield_lower_model: Pipeline
+    yield_upper_model: Pipeline
 
 
 def _crop_estimator(random_state: int) -> LGBMClassifier:
@@ -58,6 +61,12 @@ def train_all_models(X_train: pd.DataFrame, y_crop: pd.Series, y_risk: pd.DataFr
     crop_pipe = Pipeline([("prep", preprocessor), ("model", _crop_estimator(config.training.random_state))])
     risk_pipe = Pipeline([("prep", preprocessor), ("model", _risk_estimator(config.training.random_state))])
     yield_pipe = Pipeline([("prep", preprocessor), ("model", _yield_estimator(config.training.random_state))])
+    yield_lower_pipe = Pipeline(
+        [("prep", preprocessor), ("model", GradientBoostingRegressor(loss="quantile", alpha=0.1, random_state=config.training.random_state))]
+    )
+    yield_upper_pipe = Pipeline(
+        [("prep", preprocessor), ("model", GradientBoostingRegressor(loss="quantile", alpha=0.9, random_state=config.training.random_state))]
+    )
 
     crop_param_grid = {
         "model__num_leaves": [15, 31, 63],
@@ -77,8 +86,16 @@ def train_all_models(X_train: pd.DataFrame, y_crop: pd.Series, y_risk: pd.DataFr
 
     risk_pipe.fit(X_train, y_risk)
     yield_pipe.fit(X_train, y_yield)
+    yield_lower_pipe.fit(X_train, y_yield)
+    yield_upper_pipe.fit(X_train, y_yield)
 
-    return TrainedModels(crop_model=crop_search.best_estimator_, risk_model=risk_pipe, yield_model=yield_pipe)
+    return TrainedModels(
+        crop_model=crop_search.best_estimator_,
+        risk_model=risk_pipe,
+        yield_model=yield_pipe,
+        yield_lower_model=yield_lower_pipe,
+        yield_upper_model=yield_upper_pipe,
+    )
 
 
 def model_feature_importance(crop_model: Pipeline, feature_names: np.ndarray) -> Dict[str, float]:

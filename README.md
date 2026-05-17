@@ -3,8 +3,9 @@
 Production-oriented, modular machine learning architecture for:
 - Crop recommendation (top-3 with probabilities)
 - Multi-risk detection (pest, disease, water stress, soil mismatch)
-- Yield prediction (tons/hectare range)
+- Yield prediction with quantile uncertainty range (tons/hectare)
 - Explainable + confidence-aware recommendations
+- Risk-prioritized intervention planning for farmer actionability
 
 ## Project structure
 
